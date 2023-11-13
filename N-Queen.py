@@ -1,61 +1,64 @@
 import random
 
-#returns a list which denotes the queen position in the ith row (0 base)
-def initialize_board(size):
-    board = []
-    for _ in range(size):
-        board.append(random.randint(0, size-1))
-    print(board)
-    return board
-
 def calculate_attacks(board):
-    size = len(board)
+    n = len(board)
     attacks = 0
-    for i in range(size):
-        for j in range(i+1, size):
-            if board[i] == board[j] or abs(board[i] - board[j]) == abs(i - j):
-                attacks += 1
+
+    for row in range(n):
+        for col in range(n):
+            if row != col:
+                if board[row] == board[col] or abs(board[row] - board[col]) == abs(row - col):
+                    attacks += 1 
+
     return attacks
 
-def print_board(board):
-    size = len(board)
-    for row in range(size):
-        line = []
-        for col in range(size):
-            if col == board[row]:
-                line.append('Q')
-            else:
-                line.append('.')
-        
-        #concate list to a string
-        print(" ".join(line))
-    print()
+def generate_random_board(n):
+    return [random.randint(0, n - 1) for _ in range(n)]
 
-def hill_climbing(size, max_iterations=800000):
-    current_board = initialize_board(size)
-    current_attacks = calculate_attacks(current_board)
+def hill_climbing(n, max_attempts=100):
+    for _ in range(max_attempts):
+        current_board = generate_random_board(n)
+        # print(current_board)
+        current_attacks = calculate_attacks(current_board)
 
-    for _ in range(max_iterations):
+        while current_attacks > 0:
+            neighbors = []
+            for col in range(n):
+                for row in range(n):
+                    if current_board[col] != row:
+                        neighbor = list(current_board)
+                        neighbor[col] = row
+                        neighbors.append(neighbor)
+
+            best_neighbor = min(neighbors, key=calculate_attacks)
+            #print("best neighbour ", best_neighbor)
+            best_attacks = calculate_attacks(best_neighbor)
+
+            if best_attacks >= current_attacks:
+                break
+
+            current_board = best_neighbor
+            current_attacks = best_attacks
+
         if current_attacks == 0:
-            print("Solution found:")
-            print_board(current_board)
             return current_board
 
-        new_board = current_board.copy()
-        random_row = random.randint(0, size-1)
-        random_col = random.randint(0, size-1)
-        new_board[random_row] = random_col
+    return None  
 
-        # Calculate attacks in the neighboring state
-        neighbor_attacks = calculate_attacks(new_board)
 
-        # If the neighboring state has fewer attacks, move to that state
-        if neighbor_attacks < current_attacks:
-            current_board = new_board
-            current_attacks = neighbor_attacks
+def print_solution(board):
+    n = len(board)
+    for row in range(n):
+        line = ["Q" if col == board[row] else "." for col in range(n)]
+        print(" ".join(line))
 
-    print("Solution not found.")
-    return None
+def eight_queens_hill_climbing():
+    n = 8
+    solution = hill_climbing(n)
 
-n_queens_size = 4
-hill_climbing(n_queens_size)
+    if solution is not None:
+        print_solution(solution)
+    else:
+        print("No solution found after multiple attempts.")
+
+eight_queens_hill_climbing()
