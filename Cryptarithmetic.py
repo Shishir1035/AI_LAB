@@ -14,14 +14,15 @@ def solve_cryptarithmetic(word1, word2, result):
             num_result = int("".join(mapping[char] for char in result))
             flag = True
             if num1 + num2 == num_result:
-                str1= str(num1)
-                str2= str(num2)
-                if(int(str1[-1])+int(str2[-1])>9):
-                    for i in range(min(len(str1),len(str2))-1, 0, -1):
-                        if(int(str1[i])+int(str2[i])<9):
-                            flag = False
-                else:
-                    flag = False
+                # for carry always 1
+                # str1= str(num1)
+                # str2= str(num2)
+                # if(int(str1[-1])+int(str2[-1])>9):
+                #     for i in range(min(len(str1),len(str2))-1, 0, -1):
+                #         if(int(str1[i])+int(str2[i])<9):
+                #             flag = False
+                # else:
+                #     flag = False
 
                 if flag==True:
                     cnt = cnt + 1

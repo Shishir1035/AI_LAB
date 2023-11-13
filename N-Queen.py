@@ -3,7 +3,6 @@ import random
 def calculate_attacks(board):
     n = len(board)
     attacks = 0
-
     for row in range(n):
         for col in range(n):
             if row != col:
@@ -13,12 +12,15 @@ def calculate_attacks(board):
     return attacks
 
 def generate_random_board(n):
-    return [random.randint(0, n - 1) for _ in range(n)]
+    board = []
+    for _ in range(n):
+        board.append(random.randint(0, n - 1))
+    return board
 
 def hill_climbing(n, max_attempts=100):
     for _ in range(max_attempts):
         current_board = generate_random_board(n)
-        # print(current_board)
+        print(current_board)
         current_attacks = calculate_attacks(current_board)
 
         while current_attacks > 0:
@@ -31,7 +33,6 @@ def hill_climbing(n, max_attempts=100):
                         neighbors.append(neighbor)
 
             best_neighbor = min(neighbors, key=calculate_attacks)
-            #print("best neighbour ", best_neighbor)
             best_attacks = calculate_attacks(best_neighbor)
 
             if best_attacks >= current_attacks:
@@ -49,16 +50,18 @@ def hill_climbing(n, max_attempts=100):
 def print_solution(board):
     n = len(board)
     for row in range(n):
-        line = ["Q" if col == board[row] else "." for col in range(n)]
+        line = []
+        for col in range(n):
+            if col == board[row]:
+                line.append("Q")
+            else:
+                line.append(".")
         print(" ".join(line))
 
-def eight_queens_hill_climbing():
-    n = 8
-    solution = hill_climbing(n)
+n = 8
+solution = hill_climbing(n)
 
-    if solution is not None:
-        print_solution(solution)
-    else:
-        print("No solution found after multiple attempts.")
-
-eight_queens_hill_climbing()
+if solution is not None:
+    print_solution(solution)
+else:
+    print("No solution found after multiple attempts.")
