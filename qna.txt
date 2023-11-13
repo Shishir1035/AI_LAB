@@ -1,0 +1,10 @@
+Q: What is the capital city of France?
+A: The capital city of France is Paris.
+Q: Who wrote the play Romeo and Juliet?
+A: Romeo and Juliet was written by William Shakespeare.
+Q: What is the largest planet in our solar system?
+A: Jupiter is the largest planet in our solar system.
+Q: In which year did Christopher Columbus first reach the Americas?
+A: Christopher Columbus first reached the Americas in 1492.
+Q: What is the chemical symbol for gold?
+A: The chemical symbol for gold is Au.
