@@ -11,8 +11,6 @@ def is_valid_move(board, row, col, num):
             return False
     start_row, start_col = 3 * (row // 3), 3 * (col // 3)
 
-    #print(start_row, start_col)
-
     for i in range(3):
         for j in range(3):
             if board[i + start_row][j + start_col] == num:
@@ -26,10 +24,10 @@ def solve_sudoku(board):
                 for num in range(1, 10): 
                     global num_step
                     num_step += 1
+                    # -------------------------------------
                     if is_valid_move(board, row, col, num):
                         board[row][col] = num
                         if solve_sudoku(board):
-                            
                             return True
                         board[row][col] = 0 
                 return False

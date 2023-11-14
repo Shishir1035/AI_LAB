@@ -5,9 +5,9 @@ def solve_cryptarithmetic(word1, word2, result):
     chars = ''.join(unique_chars)
     digits = '0123456789'
 
+    print(help(permutations))
     for perm in permutations(digits, len(unique_chars)):
         mapping = dict(zip(chars, perm))
-
         if '0' not in mapping[word1[0]] and '0' not in mapping[word2[0]] and '0' not in mapping[result[0]]:
             num1 = int("".join(mapping[char] for char in word1))
             num2 = int("".join(mapping[char] for char in word2))
